@@ -118,6 +118,12 @@ class GotoDocumentationCommand(sublime_plugin.TextCommand):
     def perl_doc(self, keyword, scope):
         open_url("http://perldoc.perl.org/search.html?q=%s" % keyword)
 
+    def html_doc(self, keyword, scope):
+        open_url(self.google_lucky_site_search_url("w3schools.com%2Ftags", keyword))
+
+    def css_doc(self, keyword, scope):
+        open_url(self.google_lucky_site_search_url("w3schools.com%2Fcss", keyword))
+
     def run_command(self, command, callback=None, **kwargs):
         if not callback:
             callback = self.panel
@@ -136,6 +142,8 @@ class GotoDocumentationCommand(sublime_plugin.TextCommand):
         self.output_view.set_read_only(True)
         active_window.run_command("show_panel", {"panel": "output.gotodocumentation"})
 
+    def google_lucky_site_search_url(self, site, keyword):
+        return "http://www.google.com/search?ie=UTF-8&oe=UTF-8&sourceid=navclient&btnI=1&as_sitesearch=%s&q=%s" % (site, keyword)
 
 class GotoDocumentationOutputCommand(sublime_plugin.TextCommand):
     def run(self, edit, output = '', output_file = None, clear = False):
